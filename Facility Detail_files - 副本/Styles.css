@@ -1,0 +1,366 @@
+﻿body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    line-height: 1.42857143;
+    background-color: #f5f5f5;
+    background-repeat: no-repeat;
+}
+
+div.contentBody {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    max-width: 800px;
+    margin: 0px auto;
+    padding: 25px 24px;
+    max-height: 1092px;
+    border-bottom: 1px solid #eee;
+}
+
+div.contentBodyMid {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    max-width: 1000px;
+    margin: 0px auto;
+    padding: 25px 24px;
+    max-height: 1092px;
+    border-bottom: 1px solid #eee;
+}
+
+div.contentBodyWide {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0px auto;
+    padding: 25px 24px;
+    max-height: 1100px;
+    border-bottom: 1px solid #eee;
+}
+
+div.contentHeader {
+    background: #ffc300;
+    color: black;
+    font-family: museo_slab500, Arial, sans-serif;
+    font-size: 1.4em;
+    font-weight: bold;
+    padding: 8px 16px;
+    overflow: hidden;
+}
+
+div.pageContentOneCol {
+    clear: both;
+    overflow: auto;
+    font-size: .9em;
+    background: white;
+    /* padding: 4px 4px 4px 4px; */
+}
+
+div.contentLeft {
+    width: 200px;
+    float: left;
+    overflow: auto;
+    padding-right: 4px;
+}
+
+div.contentRight {
+    width: 200px;
+    float: right;
+    overflow: auto;
+    padding-left: 4px;
+}
+
+div.heading {
+    width: 700px;
+}
+
+div.question {
+    margin-left: 40px;
+    width: 450px;
+}
+
+.textbox {
+    border-color: silver;
+    border-style: solid;
+    border-width: 1px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-size: 19px;
+    width: 400px;
+}
+
+.labelLargeBold {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-weight: bold;
+}
+
+.labelMedBold {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-weight: bold;
+}
+
+.labelBold {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-weight: bold;
+}
+
+.label {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+.labelSmall {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+.labelExtraSmall {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+/* Buttons */
+.button {
+    margin-top: 5px;
+    margin-left: 1px;
+    background-color: #333333;
+    border-style: none;
+    color: white;
+    font-weight: normal;
+    height: 55px;
+    white-space: normal;
+    width: 215px;
+    font-size: larger;
+}
+
+    .button:hover {
+        background-color: #3366FF;
+        border-style: none;
+        color: white;
+    }
+
+.submitButton {
+    margin-top: 5px;
+    margin-left: 1px;
+    background-color: #333333;
+    border-style: none;
+    color: white;
+    font-weight: bold;
+    height: 32px;
+}
+
+    .submitButton:hover {
+        margin-top: 5px;
+        margin-left: 1px;
+        background-color: #3366FF;
+        border-style: none;
+        color: white;
+        font-weight: bold;
+        height: 32px;
+    }
+
+.formbutton {
+    background-color: #ffffff;
+    border: 1px solid black;
+    color: #000000;
+    padding: 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 2px 2px;
+    border-radius: 16px;
+}
+
+.closebutton {
+    background-color: #000066;
+    border: none;
+    color: #FFD700;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 2px 2px;
+    border-radius: 16px;
+}
+
+.resetbutton {
+    background-color: lightgray;
+    border: 1px solid black;
+    color: #000000;
+    padding: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: bold;
+    margin: 2px 2px;
+    border-radius: 14px;
+}
+
+/*Data Tables*/
+.gv {
+    min-width: 600px
+}
+
+.dataTableHeader {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.dataTableHeaderAlt {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.dataTableRow {
+    background-color: #E7E7E7;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    font-size: 12px;
+}
+
+.dataTableRowAlt {
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    font-size: 12px;
+}
+
+.dataTableSelectedRow {
+    background-color: #42b3f4;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    font-size: 12px;
+}
+
+/*MODAL*/
+.modalBackground {
+    background-color: Black;
+    filter: alpha(opacity=40);
+    opacity: 0.4;
+}
+
+.modalPopup {
+    background-color: #FFFFFF;
+    width: 300px;
+    border: 3px solid #3E3E3E;
+}
+
+    .modalPopup .header {
+        background-color: #3E3E3E;
+        height: 30px;
+        color: White;
+        line-height: 30px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .modalPopup .body {
+        min-height: 50px;
+        line-height: 30px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .modalPopup .footer {
+        padding: 3px;
+    }
+
+    .modalPopup .yes, .modalPopup .no {
+        height: 23px;
+        color: White;
+        line-height: 23px;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .modalPopup .yes {
+        background-color: #3366FF;
+        border: 1px solid #3E3E3E;
+    }
+
+    .modalPopup .no {
+        background-color: #9F9F9F;
+        border: 1px solid #5C5C5C;
+    }
+
+/* Loader */
+.loader {
+    position: fixed;
+    z-index: 999;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: white;
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+}
+
+.center {
+    z-index: 10002;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+/* Loader Modal*/
+.loader-modal {
+    height: 68px;
+    width: 68px;
+}
+
+.loader-modal-label {
+    font-size: 9px;
+    margin-top: -40px
+}
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    /*a:-webkit-any-link {*/
+    a:link {
+        color: blue;
+        text-decoration: underline;
+    }
+
+    a:visited {
+        color: purple;
+        text-decoration: underline;
+    }
+}

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shiyuan Cyber Security 学习笔记</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+    }
+    nav {
+      width: 260px;
+      background-color: #1c2833;
+      color: white;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      transition: width 0.3s ease;
+    }
+    nav h1 {
+      font-size: 22px;
+      color: #00ffff;
+      margin: 0 0 20px;
+      text-align: center;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px #00ffff;
+    }
+    nav h2 {
+      font-size: 16px;
+      margin: 10px 0;
+      color: #95a5a6;
+    }
+    nav li {
+      list-style: none;
+      margin-bottom: 10px;
+      cursor: pointer;
+      color: #bdc3c7;
+      padding: 8px;
+      border-radius: 4px;
+      transition: all 0.3s;
+      user-select: none; /* 防止光标出现在li里 */
+    }
+    nav li:hover {
+      background-color: #00ffff;
+      color: #1c2833;
+      transform: translateX(5px);
+    }
+#toggle-nav-btn {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: transparent;
+  color: #00ffff;
+  border: none;
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+#toggle-nav-btn:hover {
+  color: #66ffff;
+}
+    main {
+      flex: 1;
+      background: transparent;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    #welcome-screen {
+      background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 50px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+      animation: fadeIn 2s;
+    }
+    #welcome-screen h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #00ffff;
+      text-shadow: 0 0 20px #00ffff;
+      letter-spacing: 2px;
+    }
+    #welcome-screen p {
+      font-size: 18px;
+      color: #ffffff;
+    }
+    .cyber-text {
+      color: #00ffff;
+      font-weight: bold;
+      text-shadow: 0 0 10px #00ffff;
+      animation: glow 1s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #00ffff; }
+      to { text-shadow: 0 0 20px #00ffff; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    #task-title {
+      display: none;
+      font-size: 28px;
+      color: #00ffff;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ffff;
+    }
+    #task-content {
+      background: #ffffff;
+      color: #333333;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      margin-bottom: 30px;
+      display: none;
+    }
+    #notes {
+      background: #ffffff;
+      color: #333333;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      min-height: 200px;
+      padding: 15px;
+      line-height: 1.6;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow-y: auto;
+      display: none;
+    }
+    h3 {
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+      display: none;
+    }
+    button#save-btn {
+      background-color: #00ffff;
+      color: #1c2833;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: none;
+      margin-top: 10px;
+    }
+    button#save-btn:hover {
+      background-color: #66ffff;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>Shiyuan's Lab</h1>
+    <h2>学习任务</h2>
+    <ul id="task-list"></ul>
+    <button id="toggle-nav-btn">☰ </button>
+  </nav>
+  <main>
+    <div id="welcome-screen">
+      <h1>🚀 多的不说，少的不唠</h1>
+      <p><span class="cyber-text">一个月Cyber Security就开造！</span></p>
+      <p style="margin-top:20px;">🎵来米塞耶~~🎵</p>
+    </div>
+    <h1 id="task-title"></h1>
+    <div id="task-content"></div>
+    <h3>我的笔记</h3>
+    <div id="notes" contenteditable="true"></div>
+    <button id="save-btn" onclick="saveNotes()">保存笔记</button>
+  </main>
+  <script>
+    const nav = document.querySelector('nav');
+    const toggleBtn = document.getElementById('toggle-nav-btn');
+    const taskListEl = document.getElementById("task-list");
+    const saveBtn = document.getElementById("save-btn");
+    let currentDay = null;
+    let saveTimer = null;
+
+     const tasks = {
+  day1: `<h2>Day 1 - IP / 子网掩码 / CIDR</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1D362YpETh" target="_blank">一分钟理解IP地址、子网掩码、CIDR</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>Windows: ipconfig</li>
+    <li>Linux: ip addr</li>
+    <li>手算 192.168.10.0/24 网段</li>
+  </ul>`,
+
+  day2: `<h2>Day 2 - TCP vs UDP / 三次握手</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1kV411j7hA/?spm_id_from=333.337.search-card.all.click&vd_source=bf5fc8b387059c58bf9af33298b436d4" target="_blank">TCP 三次握手动画演示</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>用 Wireshark 抓 TCP 三次握手</li>
+    <li>抓 UDP 包并观察</li>
+  </ul>`,
+
+  day3: `<h2>Day 3 - HTTP 协议</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV165411A7ef?spm_id_from=333.788.recommend_more_video.0&vd_source=bf5fc8b387059c58bf9af33298b436d4" target="_blank">HTTP 协议详解</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>浏览器 F12 查看 HTTP 请求</li>
+    <li>用 Python requests 请求网页</li>
+  </ul>`,
+
+  day4: `<h2>Day 4 - DNS 原理和Windows</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1Rp4y1a7xQ?spm_id_from=333.788.recommend_more_video.1&vd_source=bf5fc8b387059c58bf9af33298b436d4" target="_blank">DNS 是怎么工作的？</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>Windows: nslookup www.baidu.com</li>
+    <li>Linux: dig www.baidu.com</li>
+ <li>注册表、服务、事件日志、PowerShell</li>
+  </ul>`,
+
+  day5: `<h2>Day 5 - Linux 文件系统与权限</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1Ls411X7XF" target="_blank">Linux 文件系统结构详解</a></p>
+  <h3>实操Shell、Systemd、文件系统、权限、日志、包管理</h3>
+  <ul>
+    <li>ls, cd, chmod, chown 命令练习</li>
+    <li>尝试更改文件权限</li>
+  </ul>`,
+
+  day6: `<h2>Day 6 - OSI 七层 </h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1EU4y1v7ju?vd_source=7823b5d18e130691453f9af2854a2418" target="_blank">OSI七层网络参考模型</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>各层协议与作用：Ethernet/Wi Fi、IP/ICMP/ARP、TCP/UDP、HTTP/SMTP/DNS…</li>
+  </ul>`,
+
+  day7: `<h2>Day 7 - CIDR，路由协议基础</h2>
+<p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1WE411a7mM" target="_blank">Python 3 入门教程</a></p>
+
+  <h3>实操</h3>
+  <ul>
+    <li>静态路由、RIP、OSPF、BGP 概念</li>
+    <li>NAT、PAT、VLAN、SDN 基础</li>
+  </ul>`,
+
+  day8: `<h2>Day 8 -常用网络设备与工具</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1ay4y1a7uA" target="_blank">OWASP Top 10 入门</a></p>
+   
+<h3>实操</h3>
+  <ul>
+    <li>交换机、路由器、防火墙、WAF、负载均衡</li>
+    <li>tcpdump、Wireshark、nmap、netstat、ss、traceroute</li>
+  </ul>`,
+
+  day9: `<h2>Day 9 - 脚本语言</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1tV411Y7tR" target="_blank">SQL 注入原理</a></p>
+ 
+  <ul>
+ <li>Python：requests、socket、scapy、Paramiko、自动化脚本</li>
+    <li>Bash / PowerShell：日常维护与批量操作</li>
+  </ul>`,
+
+  day10: `<h2>Day 10 - XSS 攻击</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1Mx411A7Ej" target="_blank">XSS 攻击详解</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>测试 alert('XSS')</li>
+  </ul>`,
+
+  day11: `<h2>Day 11 - Burp Suite 入门</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1Ry4y1e7Bb" target="_blank">Burp Suite 基础操作</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>抓包并修改参数</li>
+  </ul>`,
+
+  day12: `<h2>Day 12 - nmap 用法</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1ET4y1M7ti" target="_blank">nmap 基础教程</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>nmap 扫描常用端口</li>
+    <li>nmap -sV 检测服务版本</li>
+  </ul>`,
+
+  day13: `<h2>Day 13 - 目录扫描工具</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1dT4y1g7j3" target="_blank">dirb 使用演示</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>dirb 扫描网站目录</li>
+  </ul>`,
+
+  day14: `<h2>Day 14 - Python 安全脚本</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1et411N7uV" target="_blank">Python 网络编程</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>写一个端口扫描器</li>
+  </ul>`,
+
+  day15: `<h2>Day 15 - 信息收集技巧</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1oE411p7eu" target="_blank">信息收集实战</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>whois</li>
+    <li>nslookup</li>
+    <li>Google hacking 搜索语法</li>
+  </ul>`,
+
+  day16: `<h2>Day 16 - 弱口令破解</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1Ub4y1P7uM" target="_blank">Hydra 工具演示</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>Hydra ssh 爆破练习</li>
+  </ul>`,
+
+  day17: `<h2>Day 17 - 提权概念</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1uA411z7cs" target="_blank">Linux 提权思路</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>sudo -l 检查提权机会</li>
+  </ul>`,
+
+  day18: `<h2>Day 18 - LFI / RFI 漏洞</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1KV4y1y7Dh" target="_blank">LFI 漏洞讲解</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>尝试读取 /etc/passwd</li>
+  </ul>`,
+
+  day19: `<h2>Day 19 - 反弹 Shell</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1oP4y1a7V5" target="_blank">反弹 Shell 原理</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>nc -lvvp 1234 等待连接</li>
+  </ul>`,
+
+  day20: `<h2>Day 20 - Metasploit 入门</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1Vz4y1A7fJ" target="_blank">Metasploit Framework 入门</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>演示一次漏洞利用流程</li>
+  </ul>`,
+
+  day21: `<h2>Day 21 - HackTheBox 简单靶机</h2>
+  <h3>实操</h3>
+  <ul>
+    <li>注册 HackTheBox</li>
+    <li>完成一台 Easy 靶机</li>
+  </ul>`,
+
+  day22: `<h2>Day 22 - 渗透测试流程</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1cb4y1M7EZ" target="_blank">渗透测试全流程讲解</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>写出完整渗透流程清单</li>
+  </ul>`,
+
+  day23: `<h2>Day 23 - 漏洞扫描工具</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1qK4y1x7zJ" target="_blank">Nessus 漏扫演示</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>运行 Nessus 扫描</li>
+  </ul>`,
+
+  day24: `<h2>Day 24 - 报告写作</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1TV411e7KP" target="_blank">渗透测试报告写作</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>撰写一个简单漏洞报告</li>
+  </ul>`,
+
+  day25: `<h2>Day 25 - 蓝队基础</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1yV411H7mu" target="_blank">蓝队安全基础</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>查看 Linux 日志 /var/log</li>
+  </ul>`,
+
+  day26: `<h2>Day 26 - ELK 日志分析</h2>
+  <p><strong>视频：</strong> <a href="https://www.bilibili.com/video/BV1ft411L7uD" target="_blank">ELK 入门</a></p>
+  <h3>实操</h3>
+  <ul>
+    <li>搭建 ELK 或观看演示</li>
+  </ul>`,
+
+  day27: `<h2>Day 27 - Python 自动化</h2>
+  <h3>实操</h3>
+  <ul>
+    <li>写自动扫描脚本</li>
+  </ul>`,
+
+  day28: `<h2>Day 28 - CTF 简单题</h2>
+  <h3>实操</h3>
+  <ul>
+    <li>TryHackMe 完成简单 CTF</li>
+  </ul>`,
+
+  day29: `<h2>Day 29 - 项目实战</h2>
+  <h3>实操</h3>
+  <ul>
+    <li>从信息收集到漏洞利用，完成一次流程</li>
+  </ul>`,
+
+  day30: `<h2>Day 30 - 总复盘</h2>
+  <h3>实操</h3>
+  <ul>
+    <li>整理所有笔记</li>
+    <li>总结心得</li>
+  </ul>`
+};
+
+
+    function showTask(day) {
+      document.getElementById("welcome-screen").style.display = "none";
+      document.getElementById("task-title").style.display = "block";
+      document.getElementById("task-content").style.display = "block";
+      document.querySelector("h3").style.display = "block";
+      document.getElementById("notes").style.display = "block";
+      saveBtn.style.display = "inline-block";
+      document.getElementById("task-title").innerText = `当前任务：${day}`;
+      document.getElementById("task-content").innerHTML = tasks[day] || "暂无内容";
+      loadNotes(day);
+      currentDay = day;
+    }
+
+    function saveNotes() {
+      if (currentDay) {
+        localStorage.setItem("notes_" + currentDay, document.getElementById("notes").innerHTML);
+        alert("笔记已保存！");
+      }
+    }
+
+    function loadNotes(day) {
+      const saved = localStorage.getItem("notes_" + day);
+      document.getElementById("notes").innerHTML = saved || "";
+    }
+
+    document.getElementById("notes").addEventListener("input", () => {
+      if (saveTimer) clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        if (currentDay) {
+          localStorage.setItem("notes_" + currentDay, document.getElementById("notes").innerHTML);
+          console.log(`自动保存 ${currentDay} 笔记`);
+        }
+      }, 1000);
+    });
+
+    for (let i = 1; i <= 30; i++) {
+      const li = document.createElement("li");
+      li.textContent = `Day ${i}`;
+      li.tabIndex = -1;
+      li.onclick = () => showTask(`day${i}`);
+      li.addEventListener("mousedown", e => e.preventDefault());
+      taskListEl.appendChild(li);
+    }
+
+toggleBtn.addEventListener('click', () => {
+  if (nav.style.width === '60px') {
+    nav.style.width = '260px';
+    taskListEl.style.display = 'block';
+    toggleBtn.textContent = '☰';
+  } else {
+    nav.style.width = '60px';
+    taskListEl.style.display = 'none';
+    toggleBtn.textContent = '☰';
+  }
+});
+  </script>
+</body>
+</html>

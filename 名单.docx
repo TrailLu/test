@@ -1,0 +1,24 @@
+dong chen: cyber security
+Kaveh Fathian（Assistant）: computer vision topics such as robust perception
+Guannan Liu（Assistant）：Network security，System securityCloud ，computing security
+Dejun Yang：networking, mobile sensing and computing, and Internet of things.
+Chuan Yue： Cyber-Physical, IoT and AI systems security,
+Hao Zhang： visual perception
+
+
+
+ip地址像现实中的地址，有32bit 8-8-8-8
+11000000=2^7+2^6=192
+ipv4范围0.0.0.0 - 255.255.255.255
+
+ip地址分别：         网络位       主机位
+A(1-126)大企业         8            24
+B(128-191)中型企业     16           16
+C(192-233)小企业       24           8
+D(224-239)组播
+E(240-255)科学研究
+
+ip地址构成
+网络部分：标识网络，代表ip地址所属网络
+主机部分：用来区分一个网络内的不同主机，能唯一标识网段上的某台设备
+
